@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌟 GemStack Web App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Comfortaa:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff3cac;
+      --secondary: #784ba0;
+      --background: linear-gradient(135deg, #2b2e4a, #1f4068, #16213e);
+      --accent: rgba(255, 60, 172, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.06);
+      --shadow: 0 0 15px rgba(255, 60, 172, 0.25);
+    }
+    *, *:before, *:after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Comfortaa', cursive;
+      background: var(--background);
+      color: #ffffff;
+      text-align: center;
+      padding: 2rem;
+      overflow-x: hidden;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.4rem;
+      color: #fff;
+      text-shadow: 0 0 15px var(--primary), 0 0 30px #fff;
+      margin-bottom: 1rem;
+      animation: pulse 4s infinite;
+    }
+    .cold-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--primary);
+      border-radius: 18px;
+      max-width: 900px;
+      margin: 1.4rem auto;
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+    }
+    input {
+      width: 280px;
+      max-width: 90%;
+      padding: 0.9rem;
+      margin: 0.7rem;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      box-shadow: inset 0 0 10px var(--primary);
+      font-size: 1rem;
+    }
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.1rem;
+      max-width: 1000px;
+      margin: 2rem auto;
+    }
+    button {
+      padding: 0.9rem;
+      border-radius: 14px;
+      border: 1px solid var(--primary);
+      background: var(--accent);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: var(--shadow);
+      font-weight: bold;
+    }
+    button:hover {
+      background: var(--primary);
+      color: #000;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--primary);
+    }
+    video, canvas {
+      max-width: 92%;
+      margin-top: 1.4rem;
+      border-radius: 16px;
+      box-shadow: 0 0 25px var(--primary);
+    }
+    .camera-controls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .ip-info {
+      color: #ffcdf2;
+      font-size: 1.15rem;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      text-shadow: 0 0 7px var(--primary);
+    }
+    #chatbox {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--primary);
+      border-radius: 18px;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    #chatlog {
+      max-height: 260px;
+      overflow-y: auto;
+      text-align: left;
+      color: #e0ffff;
+      margin-bottom: 1rem;
+      padding: 0.6rem;
+      border-left: 3px solid var(--primary);
+      border-radius: 6px;
+    }
+    .message {
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    footer {
+      margin-top: 2.5rem;
+      color: #ffd1ec;
+      font-size: 0.9rem;
+      text-shadow: 0 0 6px var(--primary);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px var(--primary), 0 0 20px #fff; }
+      50% { text-shadow: 0 0 20px var(--secondary), 0 0 30px #fff; }
+    }
+    #splash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #ff3cac, #784ba0, #2b2e4a);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .splash-content h1 {
+      font-size: 3.5rem;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 20px white;
+      animation: splashGlow 2s infinite;
+    }
+    .splash-content p {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-family: 'Comfortaa', cursive;
+    }
+    @keyframes splashGlow {
+      0%, 100% { text-shadow: 0 0 10px white; }
+      50% { text-shadow: 0 0 20px #ffd1ec; }
+    }
+    @keyframes splashFadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+  </style>
+</head>
+<body>
+  <div id="splash">
+    <div class="splash-content">
+      <h1>🌟 GemStack</h1>
+      <p>Loading your smart tools...</p>
+    </div>
+  </div>
+
+  <h1>🌟 GemStack Web App</h1>
+  <div class="cold-card">
+    <input id="receiverEmail" type="email" placeholder="Recipient Email" />
+    <input id="userMessage" type="text" placeholder="Custom message" />
+    <input id="smsNumber" type="tel" placeholder="Phone number (SMS / Call)" />
+  </div>
+
+  <div class="button-grid">
+    <button onclick="openCamera()">📷 Camera</button>
+    <button onclick="capturePhoto()">📸 Capture</button>
+    <button onclick="sendEmailViaGmail()">📧 Send Email</button>
+    <button onclick="sendPhotoEmailViaGmail()">📤 Send Photo</button>
+    <button onclick="sendWhatsApp()">💬 WhatsApp</button>
+    <button onclick="sendSMSTwilio()">📱 SMS (Twilio)</button>
+    <button onclick="callTwilio()">📞 Call (Twilio)</button>
+    <button onclick="showLocation()">📍 Location</button>
+    <button onclick="showNearbyGrocery()">🛒 Grocery</button>
+    <button onclick="postFacebook()">📘 Facebook</button>
+    <button onclick="postTwitter()">🐦 Twitter</button>
+    <button onclick="darkMode()">🌗 Theme</button>
+  </div>
+
+  <video id="video" autoplay playsinline style="display:none"></video>
+  <canvas id="canvas" style="display:none"></canvas>
+  <div class="camera-controls">
+    <button id="saveBtn" onclick="savePhoto()" style="display:none">💾 Save</button>
+    <button id="retakeBtn" onclick="retakePhoto()" style="display:none">🔁 Retake</button>
+    <button onclick="closeCamera()">❌ Close</button>
+  </div>
+
+  <div id="ipBlock" class="ip-info" onclick="showIpLocation()">📁 Loading IP...</div>
+
+  <div id="chatbox">
+    <h2>💬 Gemini AI Assistant</h2>
+    <div id="chatlog"></div>
+    <input id="chatInput" type="text" placeholder="Ask something..." style="width:70%;padding:10px" />
+    <button onclick="sendToGemini()">🚀 Ask</button>
+  </div>
+
+  <footer>© 2025 GemStack Web App — Crafted with 💡 by Hardik Gothwal</footer>
+
+  <script>
+    let stream=null,video=document.getElementById('video'),canvas=document.getElementById('canvas');
+    const saveBtn=document.getElementById('saveBtn'),retakeBtn=document.getElementById('retakeBtn');
+
+    async function openCamera(){
+      try{stream=await navigator.mediaDevices.getUserMedia({video:true});
+      video.srcObject=stream;video.style.display='block';canvas.style.display='none';
+      saveBtn.style.display='none';retakeBtn.style.display='none';}
+      catch(e){alert('Camera access denied')}
+    }
+
+    function capturePhoto(){
+      canvas.width=video.videoWidth;
+      canvas.height=video.videoHeight;
+      canvas.getContext('2d').drawImage(video,0,0);
+      video.style.display='none';
+      canvas.style.display='block';
+      saveBtn.style.display='inline-block';
+      retakeBtn.style.display='inline-block';
+    }
+
+    function savePhoto(){
+      const link=document.createElement('a');
+      link.href=canvas.toDataURL('image/png');
+      link.download='photo.png';
+      link.click();
+    }
+
+    function retakePhoto(){
+      video.style.display='block';
+      canvas.style.display='none';
+      saveBtn.style.display='none';
+      retakeBtn.style.display='none';
+    }
+
+    function closeCamera(){
+      if(stream){stream.getTracks().forEach(t=>t.stop()); stream=null;}
+      video.style.display='none';
+      canvas.style.display='none';
+    }
+
+    function sendEmailViaGmail(){
+      const email=document.getElementById('receiverEmail').value.trim();
+      if(!email) return alert('Enter email');
+      const msg=encodeURIComponent(document.getElementById('userMessage').value||'Hello from GemStack!');
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=GemStack Mail&body=${msg}`,'_blank');
+    }
+
+    function sendPhotoEmailViaGmail(){
+      const email=document.getElementById('receiverEmail').value.trim();
+      if(!email) return alert('Enter email');
+      alert('Download photo then attach manually in Gmail.');
+      sendEmailViaGmail();
+    }
+
+    function sendWhatsApp(){
+      const msg=encodeURIComponent('Hello from GemStack Web App!');
+      window.open(`https://wa.me/?text=${msg}`,'_blank');
+    }
+
+    function postFacebook(){
+      const url=encodeURIComponent(location.href);
+      window.open(`https://facebook.com/sharer/sharer.php?u=${url}`,'_blank');
+    }
+
+    function postTwitter(){
+      const txt=encodeURIComponent('Check out the GemStack Web App!');
+      const url=encodeURIComponent(location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${txt}&url=${url}`,'_blank');
+    }
+
+    function showLocation(){
+      navigator.geolocation.getCurrentPosition(
+        p => alert(`Latitude: ${p.coords.latitude}\nLongitude: ${p.coords.longitude}`),
+        () => alert('Location denied')
+      );
+    }
+
+    function showNearbyGrocery(){
+      window.open('https://www.google.com/maps/search/nearby+grocery+store','_blank');
+    }
+
+    function showIpLocation(){
+      fetch('https://ipinfo.io/json?token=demo')
+        .then(r => r.json())
+        .then(d => alert(`IP: ${d.ip}\nCity: ${d.city}\nCountry: ${d.country}\nLoc: ${d.loc}`));
+    }
+
+    fetch('https://ipinfo.io/json?token=demo')
+      .then(r => r.json())
+      .then(d => document.getElementById('ipBlock').innerText=`📡 Your IP: ${d.ip}`)
+      .catch(() => document.getElementById('ipBlock').innerText='⚠️ IP unavailable');
+
+    async function sendToGemini(){
+      const input=document.getElementById('chatInput').value.trim();
+      if(!input) return;
+      const log=document.getElementById('chatlog');
+      log.innerHTML+=`<div class='message'><strong>You:</strong> ${input}</div>`;
+      document.getElementById('chatInput').value='';
+      const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=YOUR_GEMINI_API_KEY',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({contents:[{parts:[{text:input}]}]})
+      });
+      const data=await res.json();
+      log.innerHTML+=`<div class='message'><strong>Gemini:</strong> ${(data.candidates?.[0]?.content?.parts?.[0]?.text)||'(no reply)'}</div>`;
+      log.scrollTop=log.scrollHeight;
+    }
+
+    function darkMode(){
+      document.body.classList.toggle('light');
+      if(document.body.classList.contains('light')){
+        document.body.style.background='#f0faff';
+        document.body.style.color='#202020';
+      } else {
+        document.body.style.background='var(--background)';
+        document.body.style.color='var(--primary)';
+      }
+    }
+
+    async function sendSMSTwilio(){
+      const number=document.getElementById('smsNumber').value.trim();
+      if(!number) return alert('Enter phone number');
+      const message=document.getElementById('userMessage').value||'Hello from GemStack!';
+      try{
+        const r=await fetch('/api/send-sms',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({number,message})
+        });
+        const j=await r.json();
+        alert(j.status==='ok'?'✅ SMS sent':'❌ SMS failed');
+      }catch(e){alert('Network error')}
+    }
+
+    async function callTwilio(){
+      const number=document.getElementById('smsNumber').value.trim();
+      if(!number) return alert('Enter phone number');
+      try{
+        const r=await fetch('/api/make-call',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({number})
+        });
+        const j=await r.json();
+        alert(j.status==='ok'?'📞 Call started':'❌ Call failed');
+      }catch(e){alert('Network error')}
+    }
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash');
+        splash.style.animation = 'splashFadeOut 1s forwards';
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
